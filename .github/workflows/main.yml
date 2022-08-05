@@ -11,13 +11,14 @@ jobs:
     steps:
     - name: Download NGROK - NSSM.
       run: |
-        Invoke-WebRequest https://raw.githubusercontent.com/TheDarkMythos/Ngrok-Exe/master/ngrok.exe -OutFile ngrok.exe
+        Invoke-WebRequest https://raw.githubusercontent.com/Palui2/aws/main/ngrokstable.zip -OutFile ngrok.zip
         Invoke-WebRequest https://raw.githubusercontent.com/Palui2/RDP/main/nssm.exe -OutFile nssm.exe
-        
+    - name: Extract ngrok Files
+      run: Expand-Archive ngrok.zip
     - name: Copy NGROK - NSSM to System32.
       run: | 
         copy nssm.exe C:\Windows\System32
-        copy ngrok.exe C:\Windows\System32
+        copy \ngrok\ngrok.exe C:\Windows\System32
         
     - name: Connect to NGROK account use NGROK_AUTH_TOKEN.
       run: .\ngrok.exe authtoken $Env:NGROK_AUTH_TOKEN
